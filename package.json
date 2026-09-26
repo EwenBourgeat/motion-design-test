@@ -1,0 +1,16 @@
+{
+  "name": "intendant-motion-ad",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "audio": "python3 scripts/audio.py",
+    "render": "node scripts/render.mjs",
+    "preview": "npx serve src -l 5173"
+  },
+  "devDependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.2.0",
+    "@fontsource/instrument-serif": "^5.3.0",
+    "playwright": "1.56.1"
+  }
+}
