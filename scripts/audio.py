@@ -368,22 +368,21 @@ w23 = T["w23"]
 place(sfx, whoosh(0.34, 300, 4200, 1.3, "rise"), w23[0] - 0.02, 0.8, rev=0.2)
 
 # compteur : un clic à chaque passage de chiffre + impact à chaque stat
-tA, tB, tC, tD = T["st"]
+tA, tC, tD = T["st"]
 
 
 def rolls(t):
-    eB = outQuart(P(t, tB, tB + 0.6))
-    eC = outQuart(P(t, tC, tC + 0.6))
-    eD = outQuart(P(t, tD, tD + 0.6))
-    p1 = -1 + 14 * outExpo(P(t, tA, tA + 0.62)) + 9 * eB + 7 * eC + 5 * eD
-    p2 = -1 + 16 * eB + 5 * eC + 8 * eD
+    eC = outQuart(P(t, tC, tC + 0.75))
+    eD = outQuart(P(t, tD, tD + 0.75))
+    p1 = -1 + 14 * outExpo(P(t, tA, tA + 0.8)) + 6 * eC + 5 * eD
+    p2 = -1 + 11 * eC + 8 * eD
     p3 = -1 + 13 * eD
     return p1, p2, p3
 
 
 prev = rolls(tA - 0.01)
 last_tick = -1.0
-for k in range(int((12.3 - tA) * 1000)):
+for k in range(int((12.4 - tA) * 1000)):
     t = tA + k / 1000
     cur = rolls(t)
     crossed = sum(1 for a, b in zip(prev, cur) if math.floor(a) != math.floor(b))
@@ -400,11 +399,11 @@ place(sfx, whoosh(0.6, 400, 1600, 2.0, "swell"), tA + 0.3, 0.22, pan=0.3)
 penta = [0, 2, 4, 7, 9]
 for k in range(27):
     m = 72 + 12 * (k // 5) // 2 + penta[k % 5]
-    place(sfx, blip(min(m, 100), 0.16), tC + 0.2 + k * 0.02, 1.0, pan=-0.6 + 1.2 * k / 26, rev=0.15)
+    place(sfx, blip(min(m, 100), 0.16), tC + 0.3 + k * 0.028, 1.0, pan=-0.6 + 1.2 * k / 26, rev=0.15)
 # étoiles
 for i in range(5):
-    place(sfx, tick(1800, 0.35, 600), tD + 0.1 + i * 0.06, 1.0)
-    place(sfx, bell([79, 81, 84, 86, 88][i], 1.0, 0.35), tD + 0.3 + i * 0.09, 0.45, pan=-0.5 + 0.25 * i, rev=0.4)
+    place(sfx, tick(1800, 0.35, 600), tD + 0.14 + i * 0.07, 1.0)
+    place(sfx, bell([79, 81, 84, 86, 88][i], 1.0, 0.35), tD + 0.4 + i * 0.11, 0.45, pan=-0.5 + 0.25 * i, rev=0.4)
 
 # Toulouse : volet montant + cliquetis des quartiers qui passent au centre
 s4a, s4b = T["s4in"]
@@ -413,12 +412,12 @@ place(sfx, boom(), s4b, 0.4)
 
 
 def wall_scroll(t):
-    p = outQuart(P(t, s4a - 0.1, T["s4fg"] + 0.2))
-    return -60 + (-1900 + 60) * p - (t - s4a) * 40
+    p = 1 - (1 - P(t, s4a - 0.1, T["s4fg"] + 0.1)) ** 3
+    return -60 + (-2300 + 60) * p - (t - s4a) * 30
 
 
 prevc = None
-for k in range(int((T["s4fg"] + 0.2 - s4a) * 1000)):
+for k in range(int((T["s4fg"] + 0.1 - s4a) * 1000)):
     t = s4a + k / 1000
     sc = wall_scroll(t)
     c = math.floor((800 - sc - 79) / 158)

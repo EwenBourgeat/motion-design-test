@@ -9,15 +9,17 @@ la capture image par image, puis ffmpeg l'encode.
 
 ## Le film
 
-| Temps | Scène | Rôle |
+| Temps | Scène | Message |
 |---|---|---|
-| 0–3 s | **« Propriétaire à Toulouse ? »** : des notifications s'empilent (voyageur à 23 h 47, ménage annulé, avis 3★, code du portail…), la caméra tremble | Hook : on interpelle l'audience, on montre la charge mentale |
-| 3–6,5 s | Un volet balaie tout. **« On s'occupe de l'annonce / des voyageurs / du ménage / du linge / des check-in / des prix / de tout. »** puis **« Vous percevez. »** | Soulagement : la promesse du site |
-| 6,5–12,5 s | Compteur à rouleaux : **×3** → **+25 %** → **90 %** → **4,82/5**, avec barres, calendrier 27/30 nuits et étoiles | Preuves (chiffres du site) |
-| 12,5–15 s | Mur des quartiers (Capitole, Carmes, Saint-Cyprien… Blagnac, Colomiers…) → **« Une équipe toulousaine. »** + 5,0 sur Google | Ancrage local |
-| 15–20 s | **« Estimation gratuite sous 48 h. Sans engagement. Vous ne payez que si votre bien rapporte. »**, logo et bouton **Estimer mon bien** | Offre + CTA |
+| 0–3 s | **« Propriétaire à Toulouse ? »** et des notifications qui s'empilent | Hook |
+| 3–7 s | **« On s'occupe de l'annonce / des voyageurs / du ménage / de tout. »** puis **« Vous percevez. »** | Promesse |
+| 7–12,5 s | **×3** → **90 %** → **4,82/5**, avec un schéma par chiffre (barres, calendrier, étoiles) | Preuves |
+| 12,5–15,5 s | Défilement des quartiers → **« Une équipe toulousaine. »** + **5,0 Google** | Local |
+| 15,5–20 s | **Estimation gratuite sous 48 h**, logo du site, bouton et **06 21 93 44 13** en grand | CTA |
 
-Transitions en continuité : le × pivote en +, les chiffres roulent de 3 à 25, puis 90, puis 4,82,
+Règle v2 : pas de petits textes. Chaque plan porte une seule information, en gros.
+
+Transitions en continuité : les chiffres roulent de 3 à 90 puis à 4,82,
 le surligneur miel envahit l'écran, le volet oblique suit le geste du balayage des notifications.
 
 **Charte** : Dark Slate Grey `#335C67`, Vanilla Custard `#FFF3B0`, Honey Bronze `#E09F3E`,

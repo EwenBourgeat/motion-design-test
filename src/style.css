@@ -184,11 +184,11 @@ body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; 
 #caps3 { position: absolute; left: 80px; top: 902px; width: 940px; height: 200px; }
 #caps3 .cap { position: absolute; left: 0; top: 0; }
 #caps3 .ln {
-  font-family: 'Instrument Serif'; font-style: italic; font-size: 82px; line-height: 1.02; color: var(--vanilla);
+  font-family: 'Instrument Serif'; font-style: italic; font-size: 98px; line-height: 1.0; color: var(--vanilla);
   letter-spacing: -0.01em; white-space: nowrap;
 }
 #caps3 .ln b { font-style: normal; font-family: 'Instrument Serif'; font-weight: 400; color: var(--honey); }
-#viz { position: absolute; left: 80px; top: 1110px; width: 920px; height: 150px; }
+#viz { position: absolute; left: 80px; top: 1140px; width: 920px; height: 150px; }
 .bar { position: absolute; left: 0; height: 30px; border-radius: 4px; transform-origin: 0 50%; }
 .barlbl {
   position: absolute; left: 0;
@@ -216,14 +216,14 @@ body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; 
 #s4b { color: var(--vanilla); font-size: 200px; margin-top: 6px; }
 #gbadge {
   margin-top: 64px; display: inline-flex; align-items: center; gap: 22px;
-  padding: 26px 40px 26px 36px; border-radius: 999px;
+  padding: 30px 50px 30px 46px; border-radius: 999px; gap: 28px;
   background: var(--vanilla); color: var(--slate);
   transform-origin: 0 50%;
 }
-#gbadge .g-score { font-family: 'Archivo'; font-weight: 800; font-stretch: 80%; font-size: 64px; line-height: 1; }
+#gbadge .g-score { font-family: 'Archivo'; font-weight: 900; font-stretch: 78%; font-size: 96px; line-height: 1; }
 #gbadge .g-stars { display: inline-flex; gap: 6px; }
-#gbadge .g-stars svg { width: 50px; height: 50px; }
-#gbadge .g-lbl { font-family: 'JetBrains Mono'; font-weight: 600; font-size: 28px; letter-spacing: 0.12em; text-transform: uppercase; }
+#gbadge .g-stars svg { width: 68px; height: 68px; }
+#gbadge .g-lbl { font-family: 'Archivo'; font-weight: 800; font-stretch: 80%; font-size: 52px; letter-spacing: 0; text-transform: none; letter-spacing: 0.12em; text-transform: uppercase; }
 
 /* ---------- S5 ---------- */
 #s5 { background: var(--vanilla); }
@@ -250,7 +250,7 @@ body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; 
   padding: 0 12px 0 52px;
   transform-origin: 50% 50%;
 }
-#btntxt { font-family: 'Archivo'; font-weight: 800; font-stretch: 84%; font-size: 46px; letter-spacing: -0.005em; }
+#btntxt { font-family: 'Archivo'; font-weight: 800; font-stretch: 84%; font-size: 56px; letter-spacing: -0.005em; }
 #btnarr { width: 94px; height: 94px; border-radius: 50%; background: var(--honey); color: var(--slate); display: grid; place-items: center; }
 #btnarr svg { width: 46px; height: 46px; }
 #contact { left: 0; right: 0; top: 1362px; justify-content: center; font-size: 23px; letter-spacing: 0.2em; opacity: 0.75; }
@@ -272,3 +272,18 @@ body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; 
   position: absolute; inset: 0; pointer-events: none;
   background: radial-gradient(120% 80% at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.22) 100%);
 }
+
+/* ---- v2 : logo + numéro ---- */
+#logo { position: absolute; left: 50%; top: 236px; width: 820px; height: 233px; margin-left: -410px; transform-origin: 50% 50%; }
+#logo .ll { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+#est-m { top: 548px !important; }
+#grat-m { top: 690px !important; }
+#h48row { top: 955px !important; }
+#btn { top: 1122px !important; }
+#phone {
+  position: absolute; left: 0; right: 0; top: 1282px; text-align: center;
+  font-family: 'Archivo'; font-weight: 900; font-stretch: 74%; font-size: 124px; line-height: 1;
+  letter-spacing: 0.01em; color: var(--slate); font-variant-numeric: tabular-nums;
+}
+#gbadge .g-lbl { font-family: 'Archivo'; font-weight: 800; font-stretch: 80%; font-size: 54px; letter-spacing: 0; text-transform: none; }
+#gbadge { padding: 28px 52px 28px 46px; gap: 26px; }

@@ -97,17 +97,17 @@
   // ───────────────────────── timeline ─────────────────────────
   // Grille à 120 BPM : 1 temps = 0,5 s. Les coupes tombent sur les temps.
   const T = {
-    cards: [-0.16, 0.22, 0.46, 0.7, 0.92, 1.12, 1.3, 1.47, 1.63, 1.78, 1.92, 2.05, 2.17],
-    s1a: -0.1, s1b: 0.16, s1out: 2.56,
+    cards: [-0.16, 0.3, 0.62, 0.92, 1.2, 1.46, 1.7, 1.92, 2.12, 2.3],
+    s1a: -0.1, s1b: 0.16, s1out: 2.6,
     w12: [2.62, 3.0],
     occ: 2.94,
-    cyc: [3.25, 3.5, 3.75, 4.0, 4.25, 4.5, 4.75],
-    perc: 5.5,
-    w23: [6.2, 6.36], s3in: [6.3, 6.5],
-    st: [6.5, 8.0, 9.5, 11.0],
-    s4in: [12.26, 12.5], s4fg: 13.6,
-    s5in: [14.76, 15.06],
-    est: 15.0, grat: 15.22, sous: 15.72, sub: 16.36, lock: 17.0, tap: 18.1,
+    cyc: [3.45, 3.95, 4.45, 4.95],
+    perc: 5.8,
+    w23: [6.7, 6.86], s3in: [6.8, 7.0],
+    st: [7.0, 8.9, 10.8],
+    s4in: [12.46, 12.7], s4fg: 14.2,
+    s5in: [15.45, 15.75],
+    est: 15.7, grat: 15.92, sous: 16.35, lock: 17.1, tap: 18.5,
     end: 20.0,
   };
   window.__T = T;
@@ -139,27 +139,24 @@
     { tag: 'Booking', time: '08:05', msg: 'Nouvelle réservation — arrivée à 14&nbsp;h.', icon: 'cal', c: 'cherry', x: 58, y: 984, r: -5.2 },
     { tag: 'Voyageur', time: '08:42', msg: 'L’eau chaude ne marche plus.', icon: 'drop', c: 'brick', x: 184, y: 668, r: 5.4 },
     { tag: 'Abritel', time: '09:10', msg: '3 messages non lus.', icon: 'chat', c: '', x: 40, y: 1210, r: -7 },
-    { tag: 'Voyageur', time: '09:26', msg: 'On peut arriver à 11&nbsp;h plutôt&nbsp;?', icon: 'chat', c: '', x: 140, y: 862, r: -8.2 },
     { tag: 'Ménage', time: '10:03', msg: 'Il manque des draps pour ce soir.', icon: 'alert', c: 'brick', x: 96, y: 700, r: 6.8 },
-    { tag: 'Booking', time: '10:40', msg: 'Annulation de dernière minute.', icon: 'x', c: 'cherry', x: 190, y: 1062, r: 9.4 },
-    { tag: 'Voyageur', time: '11:15', msg: 'Le code du portail ne marche pas.', icon: 'key', c: '', x: 30, y: 800, r: -9.5 },
     { tag: 'Airbnb', time: '11:58', msg: 'Répondez sous 1&nbsp;h pour garder votre statut.', icon: 'alert', c: 'honey', x: 166, y: 1300, r: 7.4 },
     { tag: 'Voyageur', time: '12:31', msg: 'On est devant la porte. Vous êtes où&nbsp;?', icon: 'chat', c: 'brick', x: 96, y: 930, r: -4.2 },
   ];
 
-  const CYC = ['de l’annonce.', 'des voyageurs.', 'du ménage.', 'du linge.', 'des check-in.', 'des prix.', 'de tout.'];
+  const CYC = ['de l’annonce.', 'des voyageurs.', 'du ménage.', 'de tout.'];
 
   const HOODS = [
     'Capitole', 'Saint-Cyprien', 'Les Carmes', 'Saint-Étienne', 'Jean Jaurès', 'Compans', 'Les Chalets', 'Saint-Michel',
     'Côte Pavée', 'Rangueil', 'Minimes', 'Borderouge', 'Purpan', 'Croix-Daurade', 'Blagnac', 'Colomiers',
     'Tournefeuille', 'Brax', 'Léguevin', 'Pibrac', 'Capitole', 'Saint-Cyprien', 'Les Carmes', 'Saint-Michel',
+    'Saint-Étienne', 'Minimes', 'Blagnac', 'Rangueil',
   ];
 
   const CAPTIONS = [
     ['de revenus potentiels', 'vs une location à l’année'],
-    ['de revenus', 'vs une gestion en autonomie'],
-    ['de taux d’occupation', 'moyen par bien'],
-    ['de note moyenne', 'laissée par les voyageurs'],
+    ['d’occupation', 'en moyenne'],
+    ['de note moyenne', 'par les voyageurs'],
   ];
 
   // ───────────────────────── refs ─────────────────────────
@@ -182,7 +179,6 @@
 
     // ——— S2
     R.s2 = $('#s2'); R.s2cam = $('#s2cam');
-    R.s2label = $('#s2label');
     fitWidth($('#s2occ'), 928);
     R.occ = split($('#s2occ'));
     // items qui défilent : même taille pour tous, le dernier plus grand
@@ -204,22 +200,15 @@
     fitWidth($('#s2perc'), 900);
     R.perc = split($('#s2perc'));
     R.hl = $('#s2hl');
-    const tick = 'Diffusion <i>✱</i> Airbnb <i>·</i> Booking.com <i>·</i> Abritel <i>·</i> Expedia <i>·</i> Google <i>✱</i>';
-    $('#tickin').innerHTML = `<span>${tick}</span><span>${tick}</span><span>${tick}</span>`;
-    R.tick = $('#tickin'); R.tickerBox = $('#ticker');
-    R.tickW = R.tick.firstElementChild.getBoundingClientRect().width + 44;
 
     // ——— S3
     R.s3 = $('#s3'); R.s3cam = $('#s3cam');
-    R.s3label = $('#s3label'); R.s3idx = $('#s3idx');
-    R.idxd = $('#idxd');
-    R.idxd.style.display = 'inline-block';
     buildNumber();
     buildCaptions();
     buildViz();
 
     // ——— S4
-    R.s4 = $('#s4'); R.s4cam = $('#s4cam'); R.wall = $('#wall'); R.s4label = $('#s4label');
+    R.s4 = $('#s4'); R.s4cam = $('#s4cam'); R.wall = $('#wall');
     R.rows = HOODS.map((h) => {
       const el = document.createElement('div');
       el.className = 'row';
@@ -243,8 +232,7 @@
 
     // ——— S5
     R.s5 = $('#s5'); R.s5cam = $('#s5cam');
-    R.wmname = split($('#wmname'));
-    R.wmsub = $('#wmsub');
+    R.logoLayers = [...document.querySelectorAll('#logo .ll')];
     fitWidth($('#est'), 928);
     R.est = split($('#est'));
     fitWidth($('#grat'), 900, 262);
@@ -257,8 +245,7 @@
     sous.style.fontSize = h48.style.fontSize = fsRow + 'px';
     R.sous = split(sous); R.h48 = split(h48);
     R.h48box = $('#h48box');
-    R.sub1 = $('#sub1'); R.sub2 = $('#sub2');
-    R.contact = $('#contact'); R.btn = $('#btn'); R.btnring = $('#btnring'); R.btnarr = $('#btnarr'); R.btntxt = $('#btntxt');
+    R.phone = $('#phone'); R.btn = $('#btn'); R.btnring = $('#btnring'); R.btnarr = $('#btnarr'); R.btntxt = $('#btntxt');
 
     // ——— transitions + finition
     R.w12 = $('#w12'); R.w23a = $('#w23a'); R.w34 = $('#w34'); R.w45 = $('#w45');
@@ -345,15 +332,13 @@
     const gx = 0.03 * F, gp = 0.035 * F, gs = 0.02 * F;
     const S = {
       A: { cross: 0, d1: xW + gx, w: xW + gx + dW },
-      B: { cross: 0, d1: xW + gx, d2: xW + gx + dW, pct: xW + gx + 2 * dW + gp, w: xW + gx + 2 * dW + gp + pW },
       C: { cross: -xW * 0.6, d1: 0, d2: dW, pct: 2 * dW + gp, w: 2 * dW + gp + pW },
-      D: { d1: 0, comma: dW, d2: dW + cW, d3: 2 * dW + cW, sl5: 3 * dW + cW + gs, pct: 3 * dW + cW + gs, w: 3 * dW + cW + gs + sW },
+      D: { d1: 0, comma: dW, d2: dW + cW, d3: 2 * dW + cW, sl5: 3 * dW + cW + gs, w: 3 * dW + cW + gs + sW },
     };
     const MAXW = 930;
     S.A.s = Math.min(MAXW / S.A.w, 1.16);
-    S.B.s = Math.min(MAXW / S.B.w, 1.0);
-    S.C.s = Math.min(MAXW / S.C.w, 1.02);
-    S.D.s = Math.min(MAXW / S.D.w, 0.9);
+    S.C.s = Math.min(MAXW / S.C.w, 1.08);
+    S.D.s = Math.min(MAXW / S.D.w, 0.92);
     R.NS = S;
   }
 
@@ -381,31 +366,23 @@
   function buildViz() {
     const v = $('#viz');
     const mk = (cls, css, html = '') => { const e = document.createElement('div'); e.className = cls; e.style.cssText = css; e.innerHTML = html; v.appendChild(e); return e; };
-    // barres (états A & B)
-    R.lblA1 = mk('barlbl', 'top:0;', 'Location à l’année <span class="v">×1</span>');
-    R.lblA2 = mk('barlbl', 'top:70px;', 'Courte durée · L’Intendant <span class="v">×3</span>');
-    R.lblB1 = mk('barlbl', 'top:0;', 'Gestion en autonomie');
-    R.lblB2 = mk('barlbl', 'top:70px;', 'Avec L’Intendant <span class="v">+25&nbsp;%</span>');
-    R.bar1 = mk('bar', 'top:32px;width:920px;background:rgba(255,243,176,0.38);');
-    R.bar2 = mk('bar', 'top:102px;width:920px;background:#E09F3E;');
+    // barres (état A) : 1 vs 3, sans légende
+    R.bar1 = mk('bar', 'top:20px;height:40px;width:920px;background:rgba(255,243,176,0.38);');
+    R.bar2 = mk('bar', 'top:84px;height:40px;width:920px;background:#E09F3E;');
     // calendrier (état C) : 30 nuits, 27 réservées
-    R.lblC1 = mk('barlbl', 'top:0;', 'Nuits réservées');
-    R.lblC2 = mk('barlbl', 'top:0;left:auto;right:0;', '<span class="v" id="ccount">00</span>&thinsp;/&thinsp;30');
-    R.ccount = R.lblC2.querySelector('#ccount');
     const EMPTY = new Set([6, 17, 25]);
     R.cells = [];
     let k = 0;
     for (let i = 0; i < 30; i++) {
-      const c = mk('cell', `left:${i * 30.8}px;`);
+      const c = mk('cell', `left:${i * 30.8}px;top:14px;height:120px;`);
       const f = document.createElement('div'); f.className = 'f'; c.appendChild(f);
       R.cells.push({ el: c, f, full: !EMPTY.has(i), order: EMPTY.has(i) ? -1 : k++ });
     }
     // étoiles (état D)
-    R.lblD1 = mk('barlbl', 'top:0;', 'Avis voyageurs');
     R.stars = [0, 1, 2, 3, 4].map((i) => {
-      const s = mk('star', `left:${i * 132}px;top:34px;width:108px;height:108px;`);
+      const s = mk('star', `left:${i * 150}px;top:8px;width:128px;height:128px;`);
       s.innerHTML =
-        `<svg viewBox="0 0 24 24" width="108" height="108"><defs><clipPath id="sc${i}"><rect x="0" y="0" width="0" height="24"/></clipPath></defs>` +
+        `<svg viewBox="0 0 24 24" width="128" height="128"><defs><clipPath id="sc${i}"><rect x="0" y="0" width="0" height="24"/></clipPath></defs>` +
         `<path d="${STAR}" fill="none" stroke="rgba(255,243,176,0.45)" stroke-width="0.9" stroke-linejoin="round"/>` +
         `<path d="${STAR}" fill="#E09F3E" clip-path="url(#sc${i})"/></svg>`;
       return { el: s, clip: s.querySelector('rect') };
@@ -491,12 +468,9 @@
     R.s2.style.clipPath = t < T.w12[1] ? clip : 'none';
 
     const zoom = 1 + 0.035 * E.outCubic(P(t, T.occ, T.w23[1]));
-    const punch = t > T.cyc[6] ? 0.018 * Math.exp(-(t - T.cyc[6]) * 7) * Math.cos((t - T.cyc[6]) * 24) : 0;
+    const tt3 = T.cyc[T.cyc.length - 1];
+    const punch = t > tt3 ? 0.012 * Math.exp(-(t - tt3) * 6) * Math.cos((t - tt3) * 16) : 0;
     tf(R.s2cam, 0, 0, zoom + punch);
-
-    // label
-    const lp = E.outExpo(P(t, T.occ + 0.05, T.occ + 0.7));
-    tf(R.s2label, lerp(-40, 0, lp), 0); op(R.s2label, lp);
 
     rise(R.occ, t, T.occ, { stagger: 0.02, dur: 0.55, from: 110, sq: 0.4 });
 
@@ -505,7 +479,7 @@
     let reel = 0;
     T.cyc.forEach((c, k) => {
       const last = k === T.cyc.length - 1;
-      reel += last ? clamp(spring(t - c, 2.4, 0.62), 0, 1.2) : E.outExpo(P(t, c, c + 0.2));
+      reel += last ? clamp(spring(t - c, 2.2, 0.62), 0, 1.2) : E.outExpo(P(t, c, c + 0.32));
     });
     R.cyc.forEach((el, i) => {
       const y = (i + 1 - reel) * PITCH;
@@ -519,10 +493,6 @@
     rise(R.perc, t, T.perc, { stagger: 0.018, dur: 0.55, from: 112, sq: 0.3, out: T.w23[0] - 0.16, outStagger: 0.006, outDur: 0.18 });
     tf(R.hl, 0, 0, 1, 0, E.outExpo(P(t, T.perc + 0.14, T.perc + 0.7)), 1);
 
-    // bandeau plateformes
-    const tk = E.outExpo(P(t, T.occ + 0.3, T.occ + 1.0));
-    op(R.tickerBox, tk);
-    tf(R.tick, -((t - T.occ) * 150) % R.tickW, 0);
   }
 
   // ——— transition S2 → S3 : le surligneur miel envahit l'écran
@@ -551,122 +521,88 @@
     const on = t > T.s3in[0] && t < T.s4in[1] + 0.02;
     show(R.s3, on);
     if (!on) return;
-    const [tA, tB, tC, tD] = T.st;
+    const [tA, tC, tD] = T.st;
     R.s3.style.clipPath = t < T.s3in[1] ? `inset(${lerp(100, 0, E.inOutExpo(P(t, T.s3in[0], T.s3in[1])))}% 0 0 0)` : 'none';
 
-    // caméra : dérive + petit coup à chaque changement de chiffre
     let kick = 0;
     T.st.forEach((ts) => { const d = t - ts; if (d > 0) kick += 0.008 * Math.exp(-d * 7) * Math.cos(d * 13); });
-    tf(R.s3cam, 0, lerp(10, -10, P(t, tA, 12.5)), 1 + 0.03 * P(t, tA, 12.5) + kick);
+    tf(R.s3cam, 0, lerp(10, -10, P(t, tA, 12.7)), 1 + 0.03 * P(t, tA, 12.7) + kick);
 
-    const lp = E.outExpo(P(t, tA, tA + 0.7));
-    tf(R.s3label, lerp(-40, 0, lp), 0); op(R.s3label, lp);
-    op(R.s3idx, lp);
-    const k = t < tB ? 0 : t < tC ? 1 : t < tD ? 2 : 3;
-    const ktime = T.st[k];
-    R.idxd.textContent = '0' + (k + 1);
-    tf(R.idxd, 0, lerp(100, 0, E.outExpo(P(t, ktime, ktime + 0.35))), 1, 0, null, null, '%');
-
-    // ——— compteur
+    // ——— compteur : ×3 → 90 % → 4,82/5
     const S = R.NS;
-    const D = 0.6;
-    const eB = E.outQuart(P(t, tB, tB + D)), eC = E.outQuart(P(t, tC, tC + D)), eD = E.outQuart(P(t, tD, tD + D));
-    const seq = (a, b, c, d) => lerp(lerp(lerp(a, b, eB), c, eC), d, eD);
-
+    const D = 0.75;
+    const eC = E.outQuart(P(t, tC, tC + D)), eD = E.outQuart(P(t, tD, tD + D));
+    const seq = (a, c, d) => lerp(lerp(a, c, eC), d, eD);
     const eA = E.outExpo(P(t, tA, tA + 0.8));
-    const sc = seq(S.A.s, S.B.s, S.C.s, S.D.s) * lerp(1.04, 1, eA);
-    tf(R.numg, 0, 0, sc);
+    tf(R.numg, 0, 0, seq(S.A.s, S.C.s, S.D.s) * lerp(1.04, 1, eA));
 
-    // croix : × apparaît en tournant, pivote en +, puis s'efface
     const xin = spring(t - tA, 2.4, 0.55);
-    const xrot = lerp(-135, 45, E.outExpo(P(t, tA, tA + 0.9))) + 135 * E.outBack(P(t, tB, tB + 0.6), 1.4) + 90 * E.inCubic(P(t, tC, tC + 0.3));
+    const xrot = lerp(-135, 45, E.outExpo(P(t, tA, tA + 0.9))) + 90 * E.inCubic(P(t, tC, tC + 0.3));
     const xs = clamp(xin, 0, 1.2) * (1 - E.inCubic(P(t, tC, tC + 0.28)));
     R.xg.style.transform = `rotate(${xrot}deg) scale(${Math.max(0, xs)})`;
-    tf(R.cross, seq(S.A.cross, S.B.cross, S.C.cross, S.C.cross), 0);
+    tf(R.cross, seq(S.A.cross, S.C.cross, S.C.cross), 0);
     R.cross.style.visibility = t < tC + 0.3 ? 'visible' : 'hidden';
 
-    // chiffres (rouleaux) : 3 → 25 → 90 → 4,82
-    const p1 = lerp(-1, 13, E.outExpo(P(t, tA, tA + 0.62))) + 9 * eB + 7 * eC + 5 * eD; // 3→12(2)→19(9)→24(4)
-    setCol(R.d1, p1);
-    tf(R.d1.el, seq(S.A.d1, S.B.d1, S.C.d1, S.D.d1), 0);
-    const p2 = -1 + 16 * eB + 5 * eC + 8 * eD; // blanc→15(5)→20(0)→28(8)
-    setCol(R.d2, p2);
-    tf(R.d2.el, seq(S.B.d2, S.B.d2, S.C.d2, S.D.d2), 0);
-    R.d2.el.style.visibility = t >= tB ? 'visible' : 'hidden';
-    const p3 = -1 + 13 * eD; // blanc→12(2)
-    setCol(R.d3, p3);
+    setCol(R.d1, -1 + 14 * E.outExpo(P(t, tA, tA + 0.8)) + 6 * eC + 5 * eD); // 3 → 9 → 4
+    tf(R.d1.el, seq(S.A.d1, S.C.d1, S.D.d1), 0);
+    setCol(R.d2, -1 + 11 * eC + 8 * eD); // blanc → 0 → 8
+    tf(R.d2.el, seq(S.C.d2, S.C.d2, S.D.d2), 0);
+    R.d2.el.style.visibility = t >= tC ? 'visible' : 'hidden';
+    setCol(R.d3, -1 + 13 * eD); // blanc → 2
     tf(R.d3.el, S.D.d3, 0);
     R.d3.el.style.visibility = t >= tD ? 'visible' : 'hidden';
 
-    // virgule, %, /5
     tf(R.comma.el, S.D.comma, 0);
     tf(R.comma.in, 0, lerp(110, 0, E.outExpo(P(t, tD + 0.08, tD + 0.6))), 1, 0, null, null, '%');
     R.comma.el.style.visibility = t >= tD ? 'visible' : 'hidden';
 
-    const pctIn = E.outExpo(P(t, tB + 0.1, tB + 0.7)), pctOut = E.inQuad(P(t, tD - 0.04, tD + 0.1));
-    tf(R.pct.el, seq(S.B.pct, S.B.pct, S.C.pct, S.D.pct), 0);
+    const pctIn = E.outExpo(P(t, tC + 0.12, tC + 0.7)), pctOut = E.inQuad(P(t, tD - 0.04, tD + 0.1));
+    tf(R.pct.el, S.C.pct, 0);
     tf(R.pct.in, 0, lerp(110, 0, pctIn) + 110 * pctOut, 1, 0, null, null, '%');
-    R.pct.el.style.visibility = t >= tB && t < tD + 0.1 ? 'visible' : 'hidden';
+    R.pct.el.style.visibility = t >= tC && t < tD + 0.1 ? 'visible' : 'hidden';
 
     tf(R.sl5.el, S.D.sl5, 0);
     tf(R.sl5.in, 0, lerp(110, 0, E.outExpo(P(t, tD + 0.16, tD + 0.72))), 1, 0, null, null, '%');
     R.sl5.el.style.visibility = t >= tD ? 'visible' : 'hidden';
 
-    // ——— légendes
+    // ——— légendes (grandes, 2 lignes)
     R.caps.forEach((lns, i) => {
-      const tin = T.st[i] + 0.1, tout = T.st[i + 1] === undefined ? undefined : T.st[i + 1] - 0.1;
+      const tin = T.st[i] + 0.12, tout = T.st[i + 1] === undefined ? undefined : T.st[i + 1] - 0.12;
       lns.forEach((ln, j) => {
-        let y = lerp(108, 0, E.outExpo(P(t, tin + j * 0.06, tin + j * 0.06 + 0.7)));
-        if (tout !== undefined) y -= 115 * E.inQuad(P(t, tout + j * 0.025, tout + j * 0.025 + 0.14));
+        let y = lerp(108, 0, E.outExpo(P(t, tin + j * 0.08, tin + j * 0.08 + 0.8)));
+        if (tout !== undefined) y -= 115 * E.inQuad(P(t, tout + j * 0.03, tout + j * 0.03 + 0.16));
         tf(ln, 0, y, 1, 0, null, null, '%');
-        ln.parentElement.style.visibility = t >= tin + j * 0.06 && (tout === undefined || t < tout + j * 0.025 + 0.14) ? 'visible' : 'hidden';
+        ln.parentElement.style.visibility = t >= tin + j * 0.08 && (tout === undefined || t < tout + j * 0.03 + 0.16) ? 'visible' : 'hidden';
       });
     });
 
-    // ——— data-viz
-    const fadeAB = 1 - E.outQuad(P(t, tC - 0.04, tC + 0.1));
-    const a1 = E.outExpo(P(t, tA + 0.18, tA + 0.6)) * (1 - E.outQuad(P(t, tB - 0.04, tB + 0.1)));
-    const a2 = E.outExpo(P(t, tB + 0.12, tB + 0.5)) * fadeAB;
-    [R.lblA1, R.lblA2].forEach((e, i) => { op(e, a1); tf(e, lerp(-30, 0, E.outExpo(P(t, tA + 0.18 + i * 0.1, tA + 0.8))), lerp(0, -14, E.outExpo(P(t, tB, tB + 0.25)))); });
-    [R.lblB1, R.lblB2].forEach((e, i) => { op(e, a2); tf(e, 0, lerp(14, 0, E.outExpo(P(t, tB + 0.05 + i * 0.05, tB + 0.5)))); });
-    const b1 = lerp(0, 1 / 3, E.outExpo(P(t, tA + 0.25, tA + 1.0))) + (0.8 - 1 / 3) * E.outExpo(P(t, tB + 0.1, tB + 0.9));
-    const b2 = E.outExpo(P(t, tA + 0.35, tA + 1.25));
-    const bh = fadeAB;
-    tf(R.bar1, 0, 0, 1, 0, b1, bh); tf(R.bar2, 0, 0, 1, 0, b2, bh);
-    R.bar1.style.visibility = R.bar2.style.visibility = t < tC + 0.22 ? 'visible' : 'hidden';
+    // ——— schémas
+    const fadeA = 1 - E.outQuad(P(t, tC - 0.06, tC + 0.1));
+    const b1 = lerp(0, 1 / 3, E.outExpo(P(t, tA + 0.3, tA + 1.1)));
+    const b2 = E.outExpo(P(t, tA + 0.45, tA + 1.5));
+    tf(R.bar1, 0, 0, 1, 0, b1, fadeA); tf(R.bar2, 0, 0, 1, 0, b2, fadeA);
+    R.bar1.style.visibility = R.bar2.style.visibility = t < tC + 0.12 ? 'visible' : 'hidden';
 
-    // calendrier
     const cOn = t >= tC && t < tD + 0.2;
-    const cIn = E.outExpo(P(t, tC + 0.05, tC + 0.5)), cOut = E.outQuad(P(t, tD - 0.04, tD + 0.08));
-    op(R.lblC1, cIn * (1 - cOut)); op(R.lblC2, cIn * (1 - cOut));
-    tf(R.lblC1, 0, lerp(14, 0, cIn)); tf(R.lblC2, 0, lerp(14, 0, cIn));
-    let filled = 0;
     R.cells.forEach((c, i) => {
       c.el.style.visibility = cOn ? 'visible' : 'hidden';
       if (!cOn) return;
-      const sy = E.outExpo(P(t, tC + 0.04 + i * 0.006, tC + 0.44 + i * 0.006)) * (1 - E.inQuad(P(t, tD - 0.04 + i * 0.002, tD + 0.08 + i * 0.002)));
+      const sy = E.outExpo(P(t, tC + 0.06 + i * 0.008, tC + 0.5 + i * 0.008)) * (1 - E.inQuad(P(t, tD - 0.06 + i * 0.002, tD + 0.08 + i * 0.002)));
       tf(c.el, 0, 0, 1, 0, 1, sy);
       if (c.full) {
-        const tf0 = tC + 0.2 + c.order * 0.02;
-        const fp = E.outExpo(P(t, tf0, tf0 + 0.22));
-        if (t >= tf0) filled++;
-        tf(c.f, 0, 0, 1, 0, 1, fp);
+        const tf0 = tC + 0.3 + c.order * 0.028;
+        tf(c.f, 0, 0, 1, 0, 1, E.outExpo(P(t, tf0, tf0 + 0.25)));
       } else tf(c.f, 0, 0, 1, 0, 1, 0);
     });
-    R.ccount.textContent = String(filled).padStart(2, '0');
 
-    // étoiles
-    const sOn = t >= tD;
-    op(R.lblD1, E.outExpo(P(t, tD + 0.14, tD + 0.54)));
-    tf(R.lblD1, 0, lerp(14, 0, E.outExpo(P(t, tD + 0.14, tD + 0.54))));
     const FILL = [1, 1, 1, 1, 0.82];
-    R.stars.forEach((s, i) => {
-      s.el.style.visibility = sOn ? 'visible' : 'hidden';
-      if (!sOn) return;
-      const sp = clamp(spring(t - (tD + 0.14 + i * 0.06), 3, 0.5), 0, 1.3);
-      tf(s.el, 0, 0, sp, lerp(-40, 0, clamp(sp)));
-      const fp = E.outCubic(P(t, tD + 0.3 + i * 0.09, tD + 0.55 + i * 0.09));
-      s.clip.setAttribute('width', (24 * FILL[i] * fp).toFixed(3));
+    R.stars.forEach((st, i) => {
+      st.el.style.visibility = t >= tD ? 'visible' : 'hidden';
+      if (t < tD) return;
+      const sp = clamp(spring(t - (tD + 0.14 + i * 0.07), 3, 0.5), 0, 1.3);
+      tf(st.el, 0, 0, sp, lerp(-40, 0, clamp(sp)));
+      const fp = E.outCubic(P(t, tD + 0.4 + i * 0.11, tD + 0.7 + i * 0.11));
+      st.clip.setAttribute('width', (24 * FILL[i] * fp).toFixed(3));
     });
   }
 
@@ -685,7 +621,7 @@
 
     // mur des quartiers
     const RH = 158, CENTER = 800;
-    const scroll = lerp(-60, -1900, E.outQuart(P(t, T.s4in[0] - 0.1, T.s4fg + 0.2))) - (t - T.s4in[0]) * 40;
+    const scroll = lerp(-60, -2300, E.outCubic(P(t, T.s4in[0] - 0.1, T.s4fg + 0.1))) - (t - T.s4in[0]) * 30;
     const dim = E.outCubic(P(t, T.s4fg - 0.05, T.s4fg + 0.4));
     R.rows.forEach((r, i) => {
       const y = i * RH + scroll;
@@ -697,17 +633,14 @@
     });
     op(R.wall, lerp(1, 0.16, dim));
 
-    const lp = E.outExpo(P(t, T.s4in[1] - 0.1, T.s4in[1] + 0.5));
-    tf(R.s4label, lerp(-40, 0, lp), 0); op(R.s4label, lp);
-
-    tf(R.s4cam, 0, 0, 1 + 0.03 * P(t, T.s4fg, 15.0));
+    tf(R.s4cam, 0, 0, 1 + 0.03 * P(t, T.s4fg, T.s5in[1]));
     rise(R.s4a, t, T.s4fg, { stagger: 0.02, dur: 0.55, from: 112, sq: 0.35 });
     rise(R.s4b, t, T.s4fg + 0.12, { stagger: 0.02, dur: 0.7, from: 125, rot: 6 });
     const bp = spring(t - (T.s4fg + 0.36), 3, 0.55);
     tf(R.badge, 0, lerp(40, 0, clamp(bp)), lerp(0.6, 1, bp));
     op(R.badge, E.outExpo(P(t, T.s4fg + 0.36, T.s4fg + 0.6)));
     R.gstars.forEach((s, i) => {
-      const sp = spring(t - (T.s4fg + 0.5 + i * 0.05), 3.4, 0.45);
+      const sp = spring(t - (T.s4fg + 0.42 + i * 0.05), 3.4, 0.6);
       s.style.transform = `scale(${Math.max(0, sp).toFixed(4)}) rotate(${lerp(-60, 0, clamp(sp))}deg)`;
     });
   }
@@ -728,16 +661,17 @@
     R.h48box.style.setProperty('--hb', E.outExpo(P(t, T.sous + 0.1, T.sous + 0.6)).toFixed(4));
     rise(R.h48, t, T.sous + 0.14, { stagger: 0.03, dur: 0.55, from: 112, sq: 0.3 });
 
-    [R.sub1, R.sub2].forEach((el, i) => {
-      el.style.visibility = t >= T.sub + i * 0.12 ? 'visible' : 'hidden';
-      tf(el, 0, lerp(110, 0, E.outExpo(P(t, T.sub + i * 0.12, T.sub + i * 0.12 + 0.7))), 1, 0, null, null, '%');
-    });
-
-    // signature + bouton
-    rise(R.wmname, t, T.lock, { stagger: 0.025, dur: 0.7, from: 125 });
-    const wsp = E.outExpo(P(t, T.lock + 0.15, T.lock + 1.0));
-    op(R.wmsub, wsp);
-    R.wmsub.style.letterSpacing = lerp(0.7, 0.34, wsp).toFixed(4) + 'em';
+    // logo : le nom se lève, la clé se trace de gauche à droite, TOULOUSE apparaît
+    const [lName, lKey, lCity] = R.logoLayers;
+    const ln = E.outExpo(P(t, T.lock, T.lock + 0.9));
+    lName.style.clipPath = `inset(0 0 ${100 - 51.5}% 0)`;
+    tf(lName, 0, lerp(60, 0, ln)); op(lName, ln);
+    const lk = E.inOutCubic(P(t, T.lock + 0.2, T.lock + 1.0));
+    lKey.style.clipPath = `inset(51.5% ${lerp(100, 0, lk)}% 14.5% 0)`;
+    const lc = E.outExpo(P(t, T.lock + 0.75, T.lock + 1.4));
+    lCity.style.clipPath = 'inset(85.5% 0 0 0)';
+    tf(lCity, 0, lerp(20, 0, lc)); op(lCity, lc);
+    tf($('#logo'), 0, 0, lerp(1.06, 1, E.outCubic(P(t, T.lock, T.end))));
 
     const bsp = spring(t - (T.lock + 0.12), 2.6, 0.6);
     const press = t > T.tap ? -0.045 * Math.exp(-(t - T.tap) * 6) * Math.cos((t - T.tap) * 14) * (t - T.tap < 0.04 ? (t - T.tap) / 0.04 : 1) : 0;
@@ -746,9 +680,9 @@
     const ar = spring(t - (T.lock + 0.35), 3, 0.5);
     const nudge = 12 * Math.max(0, Math.sin((t - T.tap - 0.6) * Math.PI * 2)) * (t > T.tap + 0.6 ? 1 : 0) * Math.exp(-Math.max(0, t - T.tap - 0.6) * 0.35);
     tf(R.btnarr, nudge, 0, clamp(ar, 0, 1.3), lerp(-90, 0, clamp(ar)));
-    const cp = E.outExpo(P(t, T.lock + 0.5, T.lock + 1.2));
-    R.contact.style.opacity = (0.75 * cp).toFixed(3);
-    tf(R.contact, 0, lerp(20, 0, cp));
+    const cp = E.outExpo(P(t, T.lock + 0.45, T.lock + 1.1));
+    op(R.phone, cp);
+    tf(R.phone, 0, lerp(50, 0, cp));
     const rp = P(t, T.tap, T.tap + 0.7);
     R.btnring.style.opacity = (t > T.tap ? (1 - E.outCubic(rp)) * 0.9 : 0).toFixed(3);
     R.btnring.style.transform = `scale(${lerp(1, 1.14, E.outCubic(rp)).toFixed(4)}, ${lerp(1, 1.5, E.outCubic(rp)).toFixed(4)})`;
