@@ -97,7 +97,7 @@
   // ───────────────────────── timeline ─────────────────────────
   // Grille à 120 BPM : 1 temps = 0,5 s. Les coupes tombent sur les temps.
   const T = {
-    cards: [-0.16, 0.3, 0.62, 0.92, 1.2, 1.46, 1.7, 1.92, 2.12, 2.3],
+    cards: [0.72, 1.12, 1.48, 1.8, 2.08, 2.32],
     s1a: -0.1, s1b: 0.16, s1out: 2.6,
     w12: [2.62, 3.0],
     occ: 2.94,
@@ -105,9 +105,9 @@
     perc: 5.8,
     w23: [6.7, 6.86], s3in: [6.8, 7.0],
     st: [7.0, 8.9, 10.8],
-    s4in: [12.46, 12.7], s4fg: 14.2,
+    s4in: [12.46, 12.7], wallStop: 13.95, s4fg: 14.3,
     s5in: [15.45, 15.75],
-    est: 15.7, grat: 15.92, sous: 16.35, lock: 17.1, tap: 18.5,
+    est: 15.7, grat: 15.92, sous: 16.35, offOut: 17.35, lock: 17.6, tap: 18.75,
     end: 20.0,
   };
   window.__T = T;
@@ -136,11 +136,7 @@
     { tag: 'Ménage', time: '00:12', msg: 'Désolée, je ne pourrai pas venir demain.', icon: 'clean', c: 'brick', x: 150, y: 905, r: 2.8 },
     { tag: 'Airbnb', time: '06:58', msg: 'Nouvel avis publié ' + miniStars(3), icon: 'star', c: 'honey', x: 66, y: 1096, r: -3.6 },
     { tag: 'Voyageur', time: '07:31', msg: 'Il n’y a plus de serviettes propres&nbsp;?', icon: 'chat', c: '', x: 172, y: 792, r: 4.6 },
-    { tag: 'Booking', time: '08:05', msg: 'Nouvelle réservation — arrivée à 14&nbsp;h.', icon: 'cal', c: 'cherry', x: 58, y: 984, r: -5.2 },
     { tag: 'Voyageur', time: '08:42', msg: 'L’eau chaude ne marche plus.', icon: 'drop', c: 'brick', x: 184, y: 668, r: 5.4 },
-    { tag: 'Abritel', time: '09:10', msg: '3 messages non lus.', icon: 'chat', c: '', x: 40, y: 1210, r: -7 },
-    { tag: 'Ménage', time: '10:03', msg: 'Il manque des draps pour ce soir.', icon: 'alert', c: 'brick', x: 96, y: 700, r: 6.8 },
-    { tag: 'Airbnb', time: '11:58', msg: 'Répondez sous 1&nbsp;h pour garder votre statut.', icon: 'alert', c: 'honey', x: 166, y: 1300, r: 7.4 },
     { tag: 'Voyageur', time: '12:31', msg: 'On est devant la porte. Vous êtes où&nbsp;?', icon: 'chat', c: 'brick', x: 96, y: 930, r: -4.2 },
   ];
 
@@ -245,7 +241,7 @@
     sous.style.fontSize = h48.style.fontSize = fsRow + 'px';
     R.sous = split(sous); R.h48 = split(h48);
     R.h48box = $('#h48box');
-    R.phone = $('#phone'); R.btn = $('#btn'); R.btnring = $('#btnring'); R.btnarr = $('#btnarr'); R.btntxt = $('#btntxt');
+    R.btn = $('#btn'); R.btnring = $('#btnring'); R.btnarr = $('#btnarr'); R.btntxt = $('#btntxt');
 
     // ——— transitions + finition
     R.w12 = $('#w12'); R.w23a = $('#w23a'); R.w34 = $('#w34'); R.w45 = $('#w45');
@@ -621,7 +617,8 @@
 
     // mur des quartiers
     const RH = 158, CENTER = 800;
-    const scroll = lerp(-60, -2300, E.outCubic(P(t, T.s4in[0] - 0.1, T.s4fg + 0.1))) - (t - T.s4in[0]) * 30;
+    const STOP = CENTER - RH / 2 - 20 * RH; // rangée 20 = Capitole, centrée
+    const scroll = lerp(-60, STOP, E.outCubic(P(t, T.s4in[0] - 0.1, T.wallStop)));
     const dim = E.outCubic(P(t, T.s4fg - 0.05, T.s4fg + 0.4));
     R.rows.forEach((r, i) => {
       const y = i * RH + scroll;
@@ -655,13 +652,15 @@
 
     tf(R.s5cam, 0, 0, 1 + 0.025 * E.outCubic(P(t, T.est, T.end)));
 
-    rise(R.est, t, T.est, { stagger: 0.022, dur: 0.6, from: 112, sq: 0.35 });
-    rise(R.grat, t, T.grat, { stagger: 0.03, dur: 0.8, from: 125, rot: 8 });
-    rise(R.sous, t, T.sous, { stagger: 0.025, dur: 0.55, from: 112, sq: 0.3 });
-    R.h48box.style.setProperty('--hb', E.outExpo(P(t, T.sous + 0.1, T.sous + 0.6)).toFixed(4));
-    rise(R.h48, t, T.sous + 0.14, { stagger: 0.03, dur: 0.55, from: 112, sq: 0.3 });
+    // temps 1 : l'offre, seule
+    const oo = T.offOut;
+    rise(R.est, t, T.est, { stagger: 0.022, dur: 0.6, from: 112, sq: 0.35, out: oo, outStagger: 0.008, outDur: 0.26 });
+    rise(R.grat, t, T.grat, { stagger: 0.03, dur: 0.8, from: 125, rot: 8, out: oo + 0.04, outStagger: 0.008, outDur: 0.26 });
+    rise(R.sous, t, T.sous, { stagger: 0.025, dur: 0.55, from: 112, sq: 0.3, out: oo + 0.08, outStagger: 0.008, outDur: 0.26 });
+    rise(R.h48, t, T.sous + 0.14, { stagger: 0.03, dur: 0.55, from: 112, sq: 0.3, out: oo + 0.1, outStagger: 0.008, outDur: 0.26 });
+    R.h48box.style.setProperty('--hb', (E.outExpo(P(t, T.sous + 0.1, T.sous + 0.6)) * (1 - E.inCubic(P(t, oo + 0.1, oo + 0.34)))).toFixed(4));
 
-    // logo : le nom se lève, la clé se trace de gauche à droite, TOULOUSE apparaît
+    // temps 2 : carton final = logo + numéro
     const [lName, lKey, lCity] = R.logoLayers;
     const ln = E.outExpo(P(t, T.lock, T.lock + 0.9));
     lName.style.clipPath = `inset(0 0 ${100 - 51.5}% 0)`;
@@ -672,27 +671,27 @@
     lCity.style.clipPath = 'inset(85.5% 0 0 0)';
     tf(lCity, 0, lerp(20, 0, lc)); op(lCity, lc);
     tf($('#logo'), 0, 0, lerp(1.06, 1, E.outCubic(P(t, T.lock, T.end))));
+    $('#logo').style.visibility = t >= T.lock ? 'visible' : 'hidden';
 
-    const bsp = spring(t - (T.lock + 0.12), 2.6, 0.6);
-    const press = t > T.tap ? -0.045 * Math.exp(-(t - T.tap) * 6) * Math.cos((t - T.tap) * 14) * (t - T.tap < 0.04 ? (t - T.tap) / 0.04 : 1) : 0;
-    tf(R.btn, 0, lerp(160, 0, clamp(bsp, 0, 1.2)), (1 + press) * lerp(0.9, 1, clamp(bsp)));
-    op(R.btn, E.outExpo(P(t, T.lock + 0.12, T.lock + 0.4)));
-    const ar = spring(t - (T.lock + 0.35), 3, 0.5);
-    const nudge = 12 * Math.max(0, Math.sin((t - T.tap - 0.6) * Math.PI * 2)) * (t > T.tap + 0.6 ? 1 : 0) * Math.exp(-Math.max(0, t - T.tap - 0.6) * 0.35);
-    tf(R.btnarr, nudge, 0, clamp(ar, 0, 1.3), lerp(-90, 0, clamp(ar)));
-    const cp = E.outExpo(P(t, T.lock + 0.45, T.lock + 1.1));
-    op(R.phone, cp);
-    tf(R.phone, 0, lerp(50, 0, cp));
+    const tb = T.lock + 0.4;
+    const bsp = spring(t - tb, 2.6, 0.6);
+    const press = t > T.tap ? -0.04 * Math.exp(-(t - T.tap) * 6) * Math.cos((t - T.tap) * 14) * (t - T.tap < 0.04 ? (t - T.tap) / 0.04 : 1) : 0;
+    tf(R.btn, 0, lerp(140, 0, clamp(bsp, 0, 1.2)), (1 + press) * lerp(0.9, 1, clamp(bsp)));
+    op(R.btn, E.outExpo(P(t, tb, tb + 0.3)));
+    R.btn.style.visibility = t >= tb ? 'visible' : 'hidden';
+    const ar = spring(t - (tb + 0.25), 3, 0.5);
+    const ring = t > T.tap + 0.5 ? 6 * Math.sin((t - T.tap - 0.5) * 22) * Math.exp(-(t - T.tap - 0.5) * 3) : 0;
+    tf(R.btnarr, 0, 0, clamp(ar, 0, 1.3), lerp(-90, 0, clamp(ar)) + ring);
     const rp = P(t, T.tap, T.tap + 0.7);
     R.btnring.style.opacity = (t > T.tap ? (1 - E.outCubic(rp)) * 0.9 : 0).toFixed(3);
-    R.btnring.style.transform = `scale(${lerp(1, 1.14, E.outCubic(rp)).toFixed(4)}, ${lerp(1, 1.5, E.outCubic(rp)).toFixed(4)})`;
+    R.btnring.style.transform = `scale(${lerp(1, 1.1, E.outCubic(rp)).toFixed(4)}, ${lerp(1, 1.4, E.outCubic(rp)).toFixed(4)})`;
   }
 
   // ——— finition
   function finish(t, frame) {
     R.grain.style.backgroundPosition = `${Math.floor(hash(frame + 0.13) * 256)}px ${Math.floor(hash(frame + 7.7) * 256)}px`;
     const light = (t > T.w12[1] && t < T.s3in[1]) || t > T.s5in[1];
-    R.vig.style.opacity = light ? '0.28' : '1';
+    R.vig.style.opacity = light ? '0' : '1';
     R.grain.style.opacity = light ? '0.06' : '0.085';
   }
 

@@ -412,12 +412,12 @@ place(sfx, boom(), s4b, 0.4)
 
 
 def wall_scroll(t):
-    p = 1 - (1 - P(t, s4a - 0.1, T["s4fg"] + 0.1)) ** 3
-    return -60 + (-2300 + 60) * p - (t - s4a) * 30
+    p = 1 - (1 - P(t, s4a - 0.1, T["wallStop"])) ** 3
+    return -60 + ((800 - 79 - 20 * 158) + 60) * p
 
 
 prevc = None
-for k in range(int((T["s4fg"] + 0.1 - s4a) * 1000)):
+for k in range(int((T["wallStop"] + 0.05 - s4a) * 1000)):
     t = s4a + k / 1000
     sc = wall_scroll(t)
     c = math.floor((800 - sc - 79) / 158)
@@ -436,6 +436,8 @@ place(sfx, stereo(butter(rng.standard_normal(int(1.2 * SR)) * np.exp(-tt(int(1.2
 place(sfx, butter(kick(0.6, 1.5), "lowpass", 400), T["grat"], 0.35)
 place(sfx, butter(kick(0.6, 1.5), "lowpass", 400), T["sous"], 0.35)
 place(sfx, marker(0.3), T["sous"] + 0.1, 0.6)
+place(sfx, whoosh(0.3, 3000, 500, 1.2, "swell"), T["offOut"] - 0.02, 0.5)
+place(sfx, boom(), T["wallStop"], 0.25)
 tap = T["tap"]
 place(sfx, tick(1100, 0.9, 260), tap, 0.9)
 place(sfx, blip(79, 0.5), tap + 0.02, 1.0, rev=0.3)

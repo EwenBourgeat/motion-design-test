@@ -137,7 +137,7 @@ body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; 
 .card .stars svg { width: 30px; height: 30px; }
 
 /* ---------- S2 ---------- */
-#s2 { background: var(--vanilla); }
+#s2 { background: #FFFFFF; }
 #s2label { left: 80px; top: 300px; }
 #s2occ-m { position: absolute; left: 76px; top: 400px; }
 #s2occ { color: var(--slate); }
@@ -226,7 +226,7 @@ body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; 
 #gbadge .g-lbl { font-family: 'Archivo'; font-weight: 800; font-stretch: 80%; font-size: 52px; letter-spacing: 0; text-transform: none; letter-spacing: 0.12em; text-transform: uppercase; }
 
 /* ---------- S5 ---------- */
-#s5 { background: var(--vanilla); }
+#s5 { background: #FFFFFF; }
 #wm { position: absolute; left: 0; right: 0; top: 262px; display: flex; flex-direction: column; align-items: center; }
 #wmname { font-family: 'Instrument Serif'; font-style: normal; font-size: 100px; color: var(--slate); letter-spacing: -0.015em; }
 #wm .mask { clip-path: inset(-0.3em -0.4em -0.12em -0.4em); }
@@ -287,3 +287,13 @@ body { -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision; 
 }
 #gbadge .g-lbl { font-family: 'Archivo'; font-weight: 800; font-stretch: 80%; font-size: 54px; letter-spacing: 0; text-transform: none; }
 #gbadge { padding: 28px 52px 28px 46px; gap: 26px; }
+
+/* ---- v3 : carton final épuré, fonds blancs ---- */
+#est-m { top: 600px !important; }
+#grat-m { top: 745px !important; }
+#h48row { top: 1012px !important; }
+#logo { top: 540px; }
+#btn { top: 900px !important; height: 156px; padding: 0 60px 0 18px; justify-content: flex-start; gap: 44px; }
+#btnarr { width: 120px; height: 120px; }
+#btnarr svg { width: 58px; height: 58px; }
+#btntxt { font-weight: 900; font-stretch: 76%; font-size: 92px; letter-spacing: 0.005em; font-variant-numeric: tabular-nums; }

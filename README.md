@@ -15,14 +15,15 @@ la capture image par image, puis ffmpeg l'encode.
 | 3–7 s | **« On s'occupe de l'annonce / des voyageurs / du ménage / de tout. »** puis **« Vous percevez. »** | Promesse |
 | 7–12,5 s | **×3** → **90 %** → **4,82/5**, avec un schéma par chiffre (barres, calendrier, étoiles) | Preuves |
 | 12,5–15,5 s | Défilement des quartiers → **« Une équipe toulousaine. »** + **5,0 Google** | Local |
-| 15,5–20 s | **Estimation gratuite sous 48 h**, logo du site, bouton et **06 21 93 44 13** en grand | CTA |
+| 15,5–17,5 s | **Estimation gratuite sous 48 h**, seule à l’écran | Offre |
+| 17,5–20 s | Carton final : logo du site + **06 21 93 44 13** dans un bouton | CTA |
 
 Règle v2 : pas de petits textes. Chaque plan porte une seule information, en gros.
 
 Transitions en continuité : les chiffres roulent de 3 à 90 puis à 4,82,
 le surligneur miel envahit l'écran, le volet oblique suit le geste du balayage des notifications.
 
-**Charte** : Dark Slate Grey `#335C67`, Vanilla Custard `#FFF3B0`, Honey Bronze `#E09F3E`,
+**Charte** : Dark Slate Grey `#335C67`, Vanilla Custard `#FFF3B0` (cartes, textes sur fond sombre), fonds clairs en blanc, Honey Bronze `#E09F3E`,
 Brown Red `#9E2A2B`, Black Cherry `#540B0E`. Le rouge brique porte la scène Toulouse (la ville rose).
 **Typographies** (libres, OFL) : Archivo (variable, condensée), Instrument Serif, JetBrains Mono.
 
